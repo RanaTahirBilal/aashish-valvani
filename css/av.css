@@ -53,18 +53,24 @@ p{margin:0 0 1.05em}
   border-radius:3px;padding:7px 12px;font:inherit;font-size:13px;color:var(--av-ink);cursor:pointer}
 
 /* hero */
-.av-hero{position:relative;display:block;margin-top:66px;background:var(--av-deep);overflow:hidden}
+.av-hero{position:relative;display:block;margin-top:66px;background:var(--av-deep);overflow:hidden;
+  /* the hero picture is 16:9 with the subject in the right third and a deliberately
+     empty left half. Without a real height the box collapsed to about 410px and cropped
+     straight through his head, which threw that composition away. */
+  min-height:clamp(540px,70vh,740px);display:flex;align-items:center}
 .av-hero-img{position:absolute;inset:0}
-.av-hero-img img{width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+.av-hero-img img{width:100%;height:100%;object-fit:cover;object-position:74% 26%}
 .av-hero-img::after{content:"";position:absolute;inset:0;
-  /* holds near full opacity across the whole text column: measured ground was RGB(123,131,135)
-     at 62% with the old ramp, which failed the hero lead at 2.66:1 */
-  background:linear-gradient(100deg,rgba(8,20,24,.975) 0%,rgba(8,20,24,.960) 56%,rgba(8,20,24,.80) 74%,rgba(8,20,24,.42) 100%)}
-.av-hero-in{position:relative;z-index:2;padding:118px 0 110px;max-width:680px}
+  /* dense across the text column, then falls away fast so he is actually visible on the right.
+     The old single ramp held .80 out to 74%, which buried him. Contrast is re-measured after
+     every change to this line. */
+  background:linear-gradient(100deg,rgba(8,20,24,.972) 0%,rgba(8,20,24,.962) 58%,rgba(8,20,24,.62) 70%,rgba(8,20,24,.18) 86%,rgba(8,20,24,.06) 100%)}
+.av-hero-in{position:relative;z-index:2;padding:72px 0}
+.av-hero-in>*{max-width:620px}
 .av-hero .av-eyebrow{color:var(--av-acc-lift)}
 .av-hero h1{color:var(--av-ivory);margin-bottom:.3em}
 .av-hero h1 em{font-style:italic;font-weight:400;color:var(--av-acc-lift)}
-.av-lead{color:var(--av-ivory-2);font-size:clamp(17px,1.5vw,20px);max-width:52ch}
+.av-lead{color:var(--av-ivory-2);font-size:clamp(17px,1.5vw,20px);max-width:44ch}
 .av-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
 .av-btn{display:inline-block;background:var(--av-acc-lift);color:#06212A;text-decoration:none;
   font-weight:600;font-size:15px;padding:13px 26px;border-radius:3px}
@@ -82,23 +88,26 @@ p{margin:0 0 1.05em}
 /* split */
 .av-split{padding:92px 0}
 .av-split-in{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1fr);gap:clamp(34px,5vw,76px);align-items:center}
-.av-split-img img{width:100%;border-radius:4px}
+.av-split-img img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 22%;border-radius:4px}
 .av-split-txt p:last-child{margin-bottom:0}
 .av-split-alt{background:var(--av-paper-2)}
 
 /* band */
 .av-band{position:relative;background:var(--av-deep);overflow:hidden}
 .av-band-img{position:absolute;inset:0}
-.av-band-img img{width:100%;height:100%;object-fit:cover;object-position:60% 40%}
+.av-band-img img{width:100%;height:100%;object-fit:cover;object-position:68% 32%}
 .av-band-img::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(8,20,24,.965) 0%,rgba(8,20,24,.930) 52%,rgba(8,20,24,.66) 100%)}
-.av-band-in{position:relative;z-index:2;padding:96px 0}
-.av-band blockquote{margin:0;max-width:22ch}
-.av-band blockquote p{font-family:var(--av-disp);font-size:clamp(28px,3.9vw,46px);line-height:1.12;
+  /* was .93 out to 52% and .66 at the right edge, which made both bands read as black
+     rectangles with an invisible photograph behind them */
+  background:linear-gradient(90deg,rgba(8,20,24,.965) 0%,rgba(8,20,24,.915) 40%,rgba(8,20,24,.52) 62%,rgba(8,20,24,.18) 100%)}
+.av-band{min-height:clamp(380px,46vh,520px);display:flex;align-items:center}
+.av-band-in{position:relative;z-index:2;padding:72px 0}
+.av-band blockquote{margin:0;max-width:19ch}
+.av-band blockquote p{font-family:var(--av-disp);font-size:clamp(26px,3.1vw,39px);line-height:1.14;
   color:var(--av-ivory);margin:0;letter-spacing:-.02em}
-.av-band-two .av-band-img img{object-position:50% 35%}
-.av-band-two blockquote{max-width:30ch}
-.av-band-two blockquote p{font-size:clamp(23px,2.8vw,34px)}
+.av-band-two .av-band-img img{object-position:36% 24%}  /* he was cropped off the right edge entirely */
+.av-band-two blockquote{max-width:26ch}
+.av-band-two blockquote p{font-size:clamp(21px,2.2vw,29px);line-height:1.18}
 
 /* care cards */
 .av-care{padding:92px 0}
@@ -108,12 +117,17 @@ p{margin:0 0 1.05em}
 .av-card p{font-size:15.5px;color:var(--av-muted);margin:0}
 
 /* plates */
-.av-plates{padding:0 0 92px}
+.av-plates{padding:0 0 74px}
 .av-plates-two{padding:92px 0}
 .av-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
 .av-grid-two{margin-top:30px}
 .av-grid figure{margin:0}
-.av-grid img{width:100%;border-radius:4px}
+.av-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px}
+/* every subject sat left of centre, which made the grid read as one repeated shot */
+.av-grid figure:nth-child(1) img{object-position:62% 40%}
+.av-grid figure:nth-child(2) img{object-position:40% 36%}
+.av-grid figure:nth-child(3) img{object-position:58% 42%}
+.av-grid figure:nth-child(4) img{object-position:46% 38%}
 .av-grid figcaption{font-size:13.5px;color:var(--av-muted);margin-top:10px}
 .av-disclose{margin-top:34px;font-size:14px;color:var(--av-muted);max-width:76ch;
   border-left:3px solid var(--av-acc);padding-left:16px}
@@ -168,9 +182,22 @@ p{margin:0 0 1.05em}
     border-bottom:1px solid var(--av-rule);flex-direction:column;gap:0;padding:8px 0}
   .av-top.open .av-nav{display:flex}
   .av-nav a{padding:13px 24px;border-top:1px solid var(--av-rule)}
-  .av-hero-in{padding:76px 0 68px}
-  .av-hero-img::after{background:linear-gradient(180deg,rgba(12,26,30,.80) 0%,rgba(12,26,30,.93) 45%,rgba(12,26,30,.97) 100%)}
-  .av-band-img::after{background:linear-gradient(180deg,rgba(12,26,30,.84) 0%,rgba(12,26,30,.94) 60%,rgba(12,26,30,.97) 100%)}
+  /* PHONE HERO. The old version put the text at the top and the darkest part of the
+     gradient at the bottom, so he was a ghost behind a near solid scrim. Now his face
+     gets the top of the frame and the copy sits on the dense lower half. */
+  .av-hero{min-height:auto;display:block}
+  .av-hero-img img{object-position:81% 12%}   /* he sits in the right third of the source; 62% clipped his face at the edge */
+  .av-hero-in{padding:230px 0 56px}
+  .av-hero-img::after{background:linear-gradient(180deg,rgba(8,20,24,.30) 0%,rgba(8,20,24,.34) 24%,rgba(8,20,24,.86) 42%,rgba(8,20,24,.965) 58%,rgba(8,20,24,.975) 100%)}
+  .av-hero h1{font-size:clamp(34px,10vw,44px)}
+  .av-hero .av-eyebrow{max-width:30ch;letter-spacing:.12em;font-size:11px}
+  .av-band{min-height:auto;display:block}
+  .av-band-img img{object-position:60% 26%}
+  .av-band-two .av-band-img img{object-position:40% 22%}
+  /* same idea on the quote bands: picture readable at the top, type on the dense base */
+  .av-band-in{padding:190px 0 60px}
+  .av-band-img::after{background:linear-gradient(180deg,rgba(8,20,24,.26) 0%,rgba(8,20,24,.32) 20%,rgba(8,20,24,.88) 38%,rgba(8,20,24,.975) 52%,rgba(8,20,24,.982) 100%)}
+  .av-split-img img{aspect-ratio:5/4;object-position:50% 20%}
   .av-split,.av-care,.av-teach,.av-contact,.av-plates-two{padding:62px 0}
   .av-plates{padding:0 0 62px}
   .av-band-in{padding:68px 0}
