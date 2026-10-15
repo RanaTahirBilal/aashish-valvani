@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://ranatahirbilal.github.io/aashish-valvani/sitemap.xml
